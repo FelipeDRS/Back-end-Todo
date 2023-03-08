@@ -43,16 +43,18 @@ app.get('/', (req, res) => {
 // inserindo dados no banco
 
 app.post('/todo', async (req, res) => {
-  const { title, id, isCompleted } = req.body;
+  const { title, id, isCompleted, description } = req.body;
 
   const todo = {
     title,
     id,
     isCompleted,
+    description,
   };
   try {
     await Todo.create(todo);
     res.status(201).json({ message: 'Todo inserido com sucesso' });
+    console.log(todo);
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -71,12 +73,13 @@ app.get('/todo', async (req, res) => {
 // atualizando dados no banco
 app.patch('/todo/:id', async (req, res) => {
   const ID = req.params.id;
-  const { title, id, isCompleted } = req.body;
+  const { title, id, isCompleted, description } = req.body;
 
   const todo = {
     title,
     id,
     isCompleted,
+    description,
   };
 
   try {
